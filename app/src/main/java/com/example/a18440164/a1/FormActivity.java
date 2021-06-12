@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import java.io.Console;
 import java.text.DateFormat;
@@ -22,8 +24,8 @@ import java.util.Locale;
 public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EventModel model;
     DateFormat tf;
-    List<Integer> reminderMinutes = Arrays.asList(1,5,15,30,60);
-    List<String> reminderLabels = Arrays.asList("1 Min", "5 Min", "15 Min", "30 Min", "1 hour");
+    List<Integer> reminderMinutes = Arrays.asList(0,1,5,15,30,60);
+    List<String> reminderLabels = Arrays.asList("None", "1 Min", "5 Min", "15 Min", "30 Min", "1 hour");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,18 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
-        //Toast.makeText(getApplicationContext(), "Selected User: "+users[position] ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Minutes: "+ reminderMinutes.get(position),Toast.LENGTH_LONG).show();
+        switch (arg0.getId()){
+            case R.id.spinner1:
+                model.Reminder1 = ((Switch) findViewById(R.id.switch1)).isChecked() ? reminderMinutes.get(position) : 0;
+                break;
+            case R.id.spinner2:
+                model.Reminder2 = ((Switch) findViewById(R.id.switch2)).isChecked() ? reminderMinutes.get(position) : 0;
+                break;
+            case R.id.spinner3:
+                model.Reminder3 = ((Switch) findViewById(R.id.switch3)).isChecked() ? reminderMinutes.get(position) : 0;
+                break;
+        }
     }
 
     @Override

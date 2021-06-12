@@ -15,4 +15,7 @@ public class EventModel implements Serializable {
     public String Location;
     public Date Start;
     public Date End;
+    public int Reminder1;
+    public int Reminder2;
+    public int Reminder3;
 }
