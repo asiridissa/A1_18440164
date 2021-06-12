@@ -10,14 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import java.io.Console;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,7 +28,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         model =(EventModel)getIntent().getSerializableExtra("model");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        setTitle("Add on " + df.format(model.Start));
+        setTitle("Add on " + df.format(model.StartTime));
         setContentView(R.layout.activity_form);
 
 //        EditText title  = (EditText)findViewById(R.id.editTextTitle);
@@ -45,8 +41,8 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 //        description.setText(model.Description);
 //        location.setText(model.Location);
         tf = new SimpleDateFormat("hh:mm a", Locale.US);
-        start.setText((String)tf.format(model.Start));
-        end.setText((String)tf.format(model.End));
+        start.setText((String)tf.format(model.StartTime));
+        end.setText((String)tf.format(model.EndTime));
 
         //Set spinner data source
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, reminderLabels);
@@ -89,7 +85,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         EditText time = (EditText) v;
 
         Bundle bundle = new Bundle();
-        bundle.putLong("time", model.Start.getTime());
+        bundle.putLong("time", model.StartTime.getTime());
         bundle.putInt("viewId", v.getId());
 
         DialogFragment fragment = new TimePickerFragment();
@@ -100,13 +96,13 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
     public void SetTime(int hourOfDay, int minute, int viewId){
         EditText text  = (EditText)findViewById(viewId);
         if (viewId == R.id.editTextStart) {
-            model.Start.setHours(hourOfDay);
-            model.Start.setMinutes(minute);
-            text.setText(tf.format(model.Start));
+            model.StartTime.setHours(hourOfDay);
+            model.StartTime.setMinutes(minute);
+            text.setText(tf.format(model.StartTime));
         }else{
-            model.End.setHours(hourOfDay);
-            model.End.setMinutes(minute);
-            text.setText(tf.format(model.End));
+            model.EndTime.setHours(hourOfDay);
+            model.EndTime.setMinutes(minute);
+            text.setText(tf.format(model.EndTime));
         }
     }
 

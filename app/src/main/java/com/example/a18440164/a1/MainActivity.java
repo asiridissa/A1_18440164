@@ -3,14 +3,12 @@ package com.example.a18440164.a1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         EventModel model = new EventModel();
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, date);
-        model.Start = calendar.getTime();
+        model.StartTime = calendar.getTime();
         calendar.add(Calendar.HOUR_OF_DAY,1);
-        model.End = calendar.getTime();
+        model.EndTime = calendar.getTime();
         launchEditorIntent.putExtra("model", (Serializable) model);
         launchEditorIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         this.startActivity(launchEditorIntent);

@@ -7,15 +7,15 @@ public class EventModel implements Serializable {
     public EventModel(){}
 
     public EventModel(Date start, Date end){
-        Start = start;
-        End = end;
+        StartTime = start;
+        EndTime = end;
     }
     public String Title;
     public String Description;
     public String Location;
-    public Date Start;
-    public Date End;
-    public int Reminder1;
-    public int Reminder2;
-    public int Reminder3;
+    public Date StartTime;
+    public Date EndTime;
+    public Integer Reminder1;
+    public Integer Reminder2;
+    public Integer Reminder3;
 }
