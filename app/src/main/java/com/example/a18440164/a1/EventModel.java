@@ -10,6 +10,7 @@ public class EventModel implements Serializable {
         StartTime = start;
         EndTime = end;
     }
+    public int Id = 0;
     public String Title;
     public String Description;
     public String Location;

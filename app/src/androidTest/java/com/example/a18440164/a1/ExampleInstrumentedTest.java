@@ -8,6 +8,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Date;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,5 +25,16 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.a18440164.a1", appContext.getPackageName());
+    }
+
+    @Test
+    public void DBHelper() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        DBHandler db = new DBHandler(appContext);
+
+        db.addEvent(new EventModel(new Date(2021,01,01,1,1),new Date(2021,01,01,2,1)));
+
+        List<EventModel> events = db.getAllEvents();
     }
 }

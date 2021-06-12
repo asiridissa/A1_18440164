@@ -2,8 +2,13 @@ package com.example.a18440164.a1;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -36,7 +41,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_EndTime + " INTEGER, "
                 + KEY_Reminder1 + " INTEGER , "
                 + KEY_Reminder2+ " INTEGER , "
-                + KEY_Reminder3+ " INTEGER , "
+                + KEY_Reminder3+ " INTEGER"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -88,29 +93,36 @@ public class DBHandler extends SQLiteOpenHelper {
 //    }
 
     // code to get all contacts in a list view
-//    public List<EventModel> getAllEvents() {
-//        List<EventModel> contactList = new ArrayList<EventModel>();
-//        // Select All Query
-//        String selectQuery = "SELECT  * FROM " + TABLE_Event;
-//
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(selectQuery, null);
-//
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                EventModel event = new Event();
-//                event.setID(Integer.parseInt(cursor.getString(0)));
-//                event.setName(cursor.getString(1));
-//                event.setPhoneNumber(cursor.getString(2));
-//                // Adding event to list
-//                contactList.add(event);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        // return event list
-//        return contactList;
-//    }
+    public List<EventModel> getAllEvents() {
+        List<EventModel> contactList = new ArrayList<EventModel>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_Event;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                EventModel event = new EventModel();
+                event.Id = Integer.parseInt(cursor.getString(0));
+                event.Title = cursor.getString(1);
+                event.Description = cursor.getString(2);
+                event.Location = cursor.getString(3);
+                event.StartTime = new Date(cursor.getInt(4));
+                event.EndTime = new Date(cursor.getInt(5));
+                event.Reminder1 =cursor.getInt(6);
+                event.Reminder2 =cursor.getInt(7);
+                event.Reminder3 =cursor.getInt(8);
+
+                // Adding event to list
+                contactList.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        // return event list
+        return contactList;
+    }
 
     // code to update the single event
 //    public int updateEvent(EventModel event) {
