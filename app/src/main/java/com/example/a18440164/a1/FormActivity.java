@@ -66,7 +66,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
-        Toast.makeText(getApplicationContext(), "Minutes: "+ reminderMinutes.get(position),Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Minutes: "+ reminderMinutes.get(position),Toast.LENGTH_LONG).show();
         switch (arg0.getId()){
             case R.id.spinner1:
                 model.Reminder1 = ((Switch) findViewById(R.id.switch1)).isChecked() ? reminderMinutes.get(position) : 0;
@@ -109,4 +109,10 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
             text.setText(tf.format(model.End));
         }
     }
+
+    public void SaveEvent(View v){
+        //todo : Save
+        finish();
+    }
+
 }
