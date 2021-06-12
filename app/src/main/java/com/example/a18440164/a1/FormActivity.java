@@ -5,17 +5,25 @@ import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.io.Console;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class FormActivity extends AppCompatActivity {
+public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EventModel model;
     DateFormat tf;
+    List<Integer> reminderMinutes = Arrays.asList(1,5,15,30,60);
+    List<String> reminderLabels = Arrays.asList("1 Min", "5 Min", "15 Min", "30 Min", "1 hour");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,30 @@ public class FormActivity extends AppCompatActivity {
         start.setText((String)tf.format(model.Start));
         end.setText((String)tf.format(model.End));
 
+        //Set spinner data source
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, reminderLabels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spin1 = (Spinner) findViewById(R.id.spinner1);
+        Spinner spin2 = (Spinner) findViewById(R.id.spinner2);
+        Spinner spin3 = (Spinner) findViewById(R.id.spinner3);
+
+        spin1.setAdapter(adapter);
+        spin1.setOnItemSelectedListener(this);
+        spin2.setAdapter(adapter);
+        spin2.setOnItemSelectedListener(this);
+        spin3.setAdapter(adapter);
+        spin3.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
+        //Toast.makeText(getApplicationContext(), "Selected User: "+users[position] ,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO - Custom Code
     }
 
     public void showTimePickerDialog(View v) {
