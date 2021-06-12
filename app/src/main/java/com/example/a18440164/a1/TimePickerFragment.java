@@ -20,14 +20,17 @@ public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
     private EventModel eventModel;
 
+    int viewId;
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
 //        final Calendar c = Calendar.getInstance();
 //        int hour = c.get(Calendar.HOUR_OF_DAY);
 //        int minute = c.get(Calendar.MINUTE);
-        long time = getArguments().getLong("start");
-        Date date= new Date(time);
+        long time = getArguments().getLong("time");
+        viewId = getArguments().getInt("viewId");
 
+        Date date= new Date(time);
 
         // Create a new instance of TimePickerDialog and return it
         return new TimePickerDialog(getActivity(), this, date.getHours(), date.getMinutes(), DateFormat.is24HourFormat(getActivity()));
@@ -35,5 +38,6 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
+        ((FormActivity)getActivity()).SetTime(hourOfDay,minute,viewId);
     }
 }
