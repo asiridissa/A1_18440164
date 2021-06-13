@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,6 +125,26 @@ public class DBHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public List<String> getFutureEventSummary() {
+        List<String> contactList = new ArrayList<String>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " > " + new Date().getTime() + " AND " + KEY_Title + " IS NOT NULL";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                String event = cursor.getString(1) + " " + new Date(cursor.getInt(4)).toString();
+                contactList.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        // return event list
+        return contactList;
+    }
+
     // code to update the single event
 //    public int updateEvent(EventModel event) {
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -151,15 +172,14 @@ public class DBHandler extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-    // Getting contacts Count
-//    public int getEventsCount() {
-//        String countQuery = "SELECT  * FROM " + TABLE_Event;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery(countQuery, null);
-//        cursor.close();
-//
-//        // return count
-//        return cursor.getCount();
-//    }
+    // Getting Events Count
+    public int getEventsCount(Date date) {
+        String countQuery = "SELECT  * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " >= " + date.getTime()  ;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
 
 }

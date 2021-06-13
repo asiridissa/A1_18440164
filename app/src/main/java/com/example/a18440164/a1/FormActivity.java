@@ -2,7 +2,14 @@ package com.example.a18440164.a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,12 +17,25 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
+import android.app.AlarmManager ;
+import android.app.PendingIntent ;
+import android.content.Intent ;
+import android.os.Bundle ;
+import android.view.View ;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar ;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EventModel model;
@@ -62,7 +82,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
-//        Toast.makeText(getApplicationContext(), "Minutes: "+ reminderMinutes.get(position),Toast.LENGTH_LONG).show();
+        //Set Reminder values
         switch (arg0.getId()){
             case R.id.spinner1:
                 model.Reminder1 = ((Switch) findViewById(R.id.switch1)).isChecked() ? reminderMinutes.get(position) : 0;
@@ -78,7 +98,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO - Custom Code
+        // No code needed here
     }
 
     public void showTimePickerDialog(View v) {
@@ -107,8 +127,15 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void SaveEvent(View v){
-        //todo : Save
+        DBHandler db = new DBHandler(this);
+        model.Title = ((EditText)findViewById(R.id.editTextTitle)).getText().toString();
+        model.Description = ((EditText)findViewById(R.id.editTextDescription)).getText().toString();
+        model.Location = ((EditText)findViewById(R.id.editTextLocation)).getText().toString();
+        //Times set in SetTime
+        //Reminder values set in onItemSelected
+
+        db.addEvent(model);
+        Toast.makeText(this,"Saved " + model.Title,Toast.LENGTH_SHORT).show();
         finish();
     }
-
 }

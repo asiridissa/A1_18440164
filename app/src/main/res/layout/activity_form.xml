@@ -7,62 +7,10 @@
     android:clickable="false"
     tools:context=".FormActivity">
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:minWidth="100dp"
-        app:layout_constraintStart_toEndOf="@+id/switch2"
-        app:layout_constraintTop_toBottomOf="@+id/spinner1" />
-
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:minWidth="100dp"
-        app:layout_constraintStart_toEndOf="@+id/switch3"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
-
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
-        android:width="120dp"
-        android:height="30dp"
-        android:text="Reminder 2"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
-
-    <Switch
-        android:id="@+id/switch3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
-        android:width="120dp"
-        android:height="30dp"
-        android:text="Reminder 3"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
-
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -70,12 +18,9 @@
         android:layout_marginRight="10dp"
         android:autofillHints=""
         android:ems="10"
+        android:gravity="start|top"
         android:hint="@string/description"
-        android:inputType="textLongMessage"
-        android:lines="4"
-        android:maxLines="4"
-        android:minLines="4"
-        android:singleLine="false"
+        android:inputType="textMultiLine"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,15 +75,16 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:width="120dp"
+        android:layout_marginTop="5dp"
+        android:width="100dp"
         android:height="30dp"
         android:text="@string/start_time"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
+        android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLocation" />
@@ -146,18 +92,18 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="32dp"
-        android:width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:width="100dp"
         android:height="30dp"
         android:text="@string/end_time"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
+        android:textSize="14sp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/editTextStart"
@@ -165,7 +111,6 @@
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
         android:width="100dp"
         android:autofillHints=""
         android:clickable="true"
@@ -179,16 +124,15 @@
         android:text="0:00 AM"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocation" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/editTextEnd"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:width="100dp"
         android:autofillHints=""
         android:clickable="true"
@@ -202,8 +146,8 @@
         android:text="23:59 PM"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextStart" />
+        app:layout_constraintStart_toEndOf="@+id/editTextStart"
+        app:layout_constraintTop_toTopOf="@+id/editTextStart" />
 
     <Button
         android:id="@+id/button"
@@ -220,29 +164,72 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="32dp"
-        android:width="120dp"
-        android:height="30dp"
-        android:text="Reminder 1"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:minWidth="100dp"
+        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinner2" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:minWidth="100dp"
-        app:layout_constraintStart_toEndOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:minWidth="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/spinner2"
+        app:layout_constraintTop_toTopOf="@+id/spinner2" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:width="120dp"
+        android:height="30dp"
+        android:text="Reminder 2"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEnd" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="120dp"
+        android:height="30dp"
+        android:text="Reminder 3"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/switch2"
+        app:layout_constraintTop_toTopOf="@+id/switch2" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="120dp"
+        android:height="30dp"
+        android:text="Reminder 1"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/switch2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/switch2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
