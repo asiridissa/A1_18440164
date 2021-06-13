@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +32,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_Event + "("
+        String CREATE_EventS_TABLE = "CREATE TABLE " + TABLE_Event + "("
                 + KEY_Id + " INTEGER PRIMARY KEY,"
                 + KEY_Title + " TEXT,"
                 + KEY_Description + " TEXT,"
@@ -44,7 +43,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_Reminder2+ " INTEGER , "
                 + KEY_Reminder3+ " INTEGER"
                 + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        db.execSQL(CREATE_EventS_TABLE);
     }
 
     // Upgrading database
@@ -77,25 +76,9 @@ public class DBHandler extends SQLiteOpenHelper {
         return id;
     }
 
-    // code to get the single event
-//    EventModel getEvent(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(TABLE_Event, new String[] { KEY_Title,
-//                        KEY_Description, KEY_Location }, KEY_Title + "=?",
-//                new String[] { String.valueOf(id) }, null, null, null, null);
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        EventModel event = new Event(Integer.parseInt(cursor.getString(0)),
-//                cursor.getString(1), cursor.getString(2));
-//        // return event
-//        return event;
-//    }
-
-    // code to get all contacts in a list view
+    // code to get all events in a list view
     public List<EventModel> getAllEvents() {
-        List<EventModel> contactList = new ArrayList<EventModel>();
+        List<EventModel> eventList = new ArrayList<EventModel>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_Event;
 
@@ -117,16 +100,18 @@ public class DBHandler extends SQLiteOpenHelper {
                 event.Reminder3 =cursor.getInt(8);
 
                 // Adding event to list
-                contactList.add(event);
+                eventList.add(event);
             } while (cursor.moveToNext());
         }
 
         // return event list
-        return contactList;
+        return eventList;
     }
 
+
+    //ist of future events
     public List<String> getFutureEventSummary() {
-        List<String> contactList = new ArrayList<String>();
+        List<String> eventList = new ArrayList<String>();
         // Select All Query
         String selectQuery = "SELECT * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " > " + new Date().getTime() + " AND " + KEY_Title + " IS NOT NULL";
 
@@ -137,42 +122,15 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String event = cursor.getString(1) + " " + new Date(cursor.getInt(4)).toString();
-                contactList.add(event);
+                eventList.add(event);
             } while (cursor.moveToNext());
         }
 
         // return event list
-        return contactList;
+        return eventList;
     }
 
-    // code to update the single event
-//    public int updateEvent(EventModel event) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//        values.put(KEY_Title, event.Title);
-//        values.put(KEY_Description, event.Description);
-//        values.put(KEY_Location, event.Location);
-//        values.put(KEY_Start, String.valueOf(event.Start));
-//        values.put(KEY_End, String.valueOf(event.End));
-//        values.put(KEY_Reminder1, event.Reminder1);
-//        values.put(KEY_Reminder2, event.Reminder2);
-//        values.put(KEY_Reminder3, event.Reminder3);
-//
-//        // updating row
-//        return db.update(TABLE_Event, values, KEY_Title + " = ?",
-//                new String[] { String.valueOf(event.getID()) });
-//    }
-
-    // Deleting single event
-//    public void deleteEvent(EventModel event) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(TABLE_Event, KEY_Title + " = ?",
-//                new String[] { String.valueOf(event.getID()) });
-//        db.close();
-//    }
-
-    // Getting Events Count
+    // Getting future Events Count
     public int getEventsCount(Date date) {
         String countQuery = "SELECT  * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " >= " + date.getTime()  ;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -181,5 +139,4 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return count;
     }
-
 }
