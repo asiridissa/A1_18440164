@@ -1,8 +1,15 @@
 package com.example.a18440164.a1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
@@ -14,8 +21,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String CHANNEL_ID = String.valueOf(R.string.channnel_id);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        ListView lv = new ListView(this);
+        //Channel needed for notifications
+        createNotificationChannel();
+
+        //        ListView lv = new ListView(this);
 //        setContentView(lv);
 //
 //        DBHandler db = new DBHandler(this);
@@ -52,7 +65,19 @@ public class MainActivity extends AppCompatActivity {
         Intent launchEditorIntent = new Intent(this, FormActivity.class);
         EventModel model = new EventModel();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, date);
+        Calendar today = Calendar.getInstance();
+
+        calendar.set(year, month, date,0,0,0);
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+
+        //Check for past dates
+        if(today.getTime().getTime() > calendar.getTime().getTime()) {
+            Toast.makeText(this,"Cannot schedule for past",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         model.StartTime = calendar.getTime();
         calendar.add(Calendar.HOUR_OF_DAY,1);
         model.EndTime = calendar.getTime();
@@ -65,5 +90,21 @@ public class MainActivity extends AppCompatActivity {
         TextView c = (TextView) findViewById(R.id.txtCount);
         String count = String.valueOf(new DBHandler(this).getEventsCount(date));
         c.setText(count + " scheduled events");
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

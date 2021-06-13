@@ -58,7 +58,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // code to add the new event
-    void addEvent(EventModel event) {
+    long addEvent(EventModel event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -72,9 +72,9 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_Reminder3, event.Reminder3);
 
         // Inserting Row
-        db.insert(TABLE_Event, null, values);
-        //2nd argument is String containing nullColumnHack
+        long id = db.insert(TABLE_Event, null, values);
         db.close(); // Closing database connection
+        return id;
     }
 
     // code to get the single event

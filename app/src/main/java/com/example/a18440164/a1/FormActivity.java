@@ -2,9 +2,11 @@ package com.example.a18440164.a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -40,8 +42,8 @@ import java.util.concurrent.TimeUnit;
 public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EventModel model;
     DateFormat tf;
-    List<Integer> reminderMinutes = Arrays.asList(0,1,5,15,30,60);
-    List<String> reminderLabels = Arrays.asList("None", "1 Min", "5 Min", "15 Min", "30 Min", "1 hour");
+    List<Integer> reminderMinutes = Arrays.asList(0,1,5,10,15,30,60);
+    List<String> reminderLabels = Arrays.asList("None", "1 Min", "5 Min","10 Min", "15 Min", "30 Min", "1 hour");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +136,37 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         //Times set in SetTime
         //Reminder values set in onItemSelected
 
-        db.addEvent(model);
+        if(model.Title.isEmpty()) {
+            Toast.makeText(this, "Title required", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        long id = db.addEvent(model);
         Toast.makeText(this,"Saved " + model.Title,Toast.LENGTH_SHORT).show();
+        if(model.Reminder1 > 0)
+            setNotification(model.Title, model.Description, ((Long)id).intValue(), new Date(model.StartTime.getTime() - (model.Reminder1 * 60 * 1000)));
+        if(model.Reminder2 > 0)
+            setNotification(model.Title, model.Description, ((Long)id).intValue(), new Date(model.StartTime.getTime() - (model.Reminder2 * 60 * 1000)));
+        if(model.Reminder3 > 0)
+            setNotification(model.Title, model.Description, ((Long)id).intValue(), new Date(model.StartTime.getTime() - (model.Reminder3 * 60 * 1000)));
         finish();
+    }
+
+    void setNotification(String title, String detail, int id, Date time){
+        Date now = new Date();
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(NotifyWorker.class)
+                        .setInitialDelay(time.getTime() - now.getTime(), TimeUnit.MILLISECONDS)
+                        .setInputData(new Data.Builder()
+                                .putInt(getString(R.string.notification_id),id)
+                                .putString(getString(R.string.notification_title),title)
+                                .putString(getString(R.string.notification_detail),detail)
+                                .putLong(getString(R.string.notification_time),time.getTime())
+                                .build())
+                        .build();
+        WorkManager
+                .getInstance(this)
+                .enqueue(uploadWorkRequest);
+
     }
 }

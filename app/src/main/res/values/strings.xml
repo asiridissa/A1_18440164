@@ -14,4 +14,11 @@
     <string name="title">Title</string>
     <string name="location">Location</string>
     <string name="end_time">End Time</string>
+    <string name="channel_name">Notification</string>
+    <string name="channel_description">Basic notification channel</string>
+    <string name="channnel_id">Main_Channel</string>
+    <string name="notification_id">id</string>
+    <string name="notification_title">title</string>
+    <string name="notification_detail">detail</string>
+    <string name="notification_time">time</string>
 </resources>
