@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         view.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView arg0, int year, int month, int date) {
-                Toast.makeText(getApplicationContext(),"Selected Date : " +date+ "/"+month+"/"+year,Toast.LENGTH_LONG).show();
-                openForm(year,month,date);
+                Toast.makeText(getApplicationContext(), "Selected Date : " + date + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+                openForm(year, month, date);
             }
         });
 
@@ -49,26 +49,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //open form activity with selected date
-    void openForm(int year, int month, int date){
+    void openForm(int year, int month, int date) {
         Intent launchEditorIntent = new Intent(this, FormActivity.class);
         EventModel model = new EventModel();
         Calendar calendar = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
         //Discard time parts
-        calendar.set(year, month, date,0,0,0);
+        calendar.set(year, month, date, 0, 0, 0);
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
 
         //Validate for future dates
-        if(today.getTime().getTime() > calendar.getTime().getTime()) {
-            Toast.makeText(this,"Cannot schedule for past",Toast.LENGTH_LONG).show();
+        if (today.getTime().getTime() > calendar.getTime().getTime()) {
+            Toast.makeText(this, "Cannot schedule for past", Toast.LENGTH_LONG).show();
             return;
         }
 
         model.StartTime = calendar.getTime();
-        calendar.add(Calendar.HOUR_OF_DAY,1);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
         model.EndTime = calendar.getTime();
 
         //Open form activity with passing EventModel
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Update event count from db
-    void updateCount(Date date){
+    void updateCount(Date date) {
         TextView c = (TextView) findViewById(R.id.txtCount);
         String count = String.valueOf(new DBHandler(this).getEventsCount(date));
         c.setText(count + " scheduled events");

@@ -40,8 +40,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_StartTime + " INTEGER,"
                 + KEY_EndTime + " INTEGER, "
                 + KEY_Reminder1 + " INTEGER , "
-                + KEY_Reminder2+ " INTEGER , "
-                + KEY_Reminder3+ " INTEGER"
+                + KEY_Reminder2 + " INTEGER , "
+                + KEY_Reminder3 + " INTEGER"
                 + ")";
         db.execSQL(CREATE_EventS_TABLE);
     }
@@ -95,9 +95,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 event.Location = cursor.getString(3);
                 event.StartTime = new Date(cursor.getInt(4));
                 event.EndTime = new Date(cursor.getInt(5));
-                event.Reminder1 =cursor.getInt(6);
-                event.Reminder2 =cursor.getInt(7);
-                event.Reminder3 =cursor.getInt(8);
+                event.Reminder1 = cursor.getInt(6);
+                event.Reminder2 = cursor.getInt(7);
+                event.Reminder3 = cursor.getInt(8);
 
                 // Adding event to list
                 eventList.add(event);
@@ -132,7 +132,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // Getting future Events Count
     public int getEventsCount(Date date) {
-        String countQuery = "SELECT  * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " >= " + date.getTime()  ;
+        String countQuery = "SELECT  * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " >= " + date.getTime();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();

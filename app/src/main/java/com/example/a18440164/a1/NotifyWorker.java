@@ -25,10 +25,10 @@ public class NotifyWorker extends Worker {
     public Result doWork() {
         Context context = this.getApplicationContext();
         //Get values from passed parameters
-        int id = getInputData().getInt(context.getString(R.string.notification_id),0);
+        int id = getInputData().getInt(context.getString(R.string.notification_id), 0);
         String title = getInputData().getString(context.getString(R.string.notification_title));
         String detail = getInputData().getString(context.getString(R.string.notification_detail));
-        long time = getInputData().getLong(context.getString(R.string.notification_time),0);
+        long time = getInputData().getLong(context.getString(R.string.notification_time), 0);
 
         //build and show notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)

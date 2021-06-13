@@ -2,8 +2,8 @@ package com.example.a18440164.a1;
 
 import android.content.Context;
 
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -33,7 +33,7 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         DBHandler db = new DBHandler(appContext);
 
-        db.addEvent(new EventModel(new Date(2021,01,01,1,1),new Date(2021,01,01,2,1)));
+        db.addEvent(new EventModel(new Date(2021, 01, 01, 1, 1), new Date(2021, 01, 01, 2, 1)));
 
         List<EventModel> events = db.getAllEvents();
     }
