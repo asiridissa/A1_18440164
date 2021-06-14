@@ -66,18 +66,12 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        //Set Reminder values
-        switch (arg0.getId()) {
-            case R.id.spinner1:
-                model.Reminder1 = ((Switch) findViewById(R.id.switch1)).isChecked() ? reminderMinutes.get(position) : 0;
-                break;
-            case R.id.spinner2:
-                model.Reminder2 = ((Switch) findViewById(R.id.switch2)).isChecked() ? reminderMinutes.get(position) : 0;
-                break;
-            case R.id.spinner3:
-                model.Reminder3 = ((Switch) findViewById(R.id.switch3)).isChecked() ? reminderMinutes.get(position) : 0;
-                break;
-        }
+    }
+
+    public void updateReminders(){
+        model.Reminder1 = ((Switch) findViewById(R.id.switch1)).isChecked() ? reminderMinutes.get(((Spinner) findViewById(R.id.spinner1)).getSelectedItemPosition()) : 0;
+        model.Reminder2 = ((Switch) findViewById(R.id.switch2)).isChecked() ? reminderMinutes.get(((Spinner) findViewById(R.id.spinner2)).getSelectedItemPosition()) : 0;
+        model.Reminder3 = ((Switch) findViewById(R.id.switch3)).isChecked() ? reminderMinutes.get(((Spinner) findViewById(R.id.spinner3)).getSelectedItemPosition()) : 0;
     }
 
     @Override
@@ -119,7 +113,8 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         model.Description = ((EditText) findViewById(R.id.editTextDescription)).getText().toString();
         model.Location = ((EditText) findViewById(R.id.editTextLocation)).getText().toString();
         //Times set in SetTime method
-        //Reminder values set in onItemSelected
+        //Get Reminder values
+        updateReminders();
 
         //Validate title
         if (model.Title.isEmpty()) {
