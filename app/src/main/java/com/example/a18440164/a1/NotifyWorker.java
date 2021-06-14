@@ -33,9 +33,9 @@ public class NotifyWorker extends Worker {
         //build and show notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_access_alarms_24)
-                .setContentTitle(title + "@" + new Date(time).toString())
+                .setContentTitle(title + " @" + new Date(time).toLocaleString())
                 .setContentText(detail)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(new Date(time).toLocaleString()).setSummaryText(detail))
                 .setDefaults(Notification.DEFAULT_ALL);
 

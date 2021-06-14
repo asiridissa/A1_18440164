@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
+        //Set times to show in form
+        model.StartTime = calendar.getTime();
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        model.EndTime = calendar.getTime();
+
         //Discard time parts
         calendar.set(year, month, date, 0, 0, 0);
         today.set(Calendar.HOUR_OF_DAY, 0);
@@ -67,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        model.StartTime = calendar.getTime();
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        model.EndTime = calendar.getTime();
-
         //Open form activity with passing EventModel
         launchEditorIntent.putExtra("model", (Serializable) model);
         launchEditorIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     void updateCount(Date date) {
         TextView c = (TextView) findViewById(R.id.txtCount);
         String count = String.valueOf(new DBHandler(this).getEventsCount(date));
-        c.setText(count + " scheduled events");
+        c.setText(count + " scheduled event(s)");
     }
 
     //Notification channel initiate
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
