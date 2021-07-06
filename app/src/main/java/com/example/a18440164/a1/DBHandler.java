@@ -133,7 +133,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<EventModel> getFutureEvents(Date date) {
         List<EventModel> eventList = new ArrayList<EventModel>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " > " + new Date().getTime() + " AND " + KEY_Title + " IS NOT NULL";
+        String selectQuery = "SELECT * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " > " + new Date().getTime() + " AND " + KEY_Title + " IS NOT NULL ORDER BY " + KEY_StartTime;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -147,8 +147,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 event.Title = cursor.getString(1);
                 event.Description = cursor.getString(2);
                 event.Location = cursor.getString(3);
-                event.StartTime = new Date(cursor.getInt(4));
-                event.EndTime = new Date(cursor.getInt(5));
+                event.StartTime = new Date(cursor.getLong(4));
+                event.EndTime = new Date(cursor.getLong(5));
                 event.Reminder1 = cursor.getInt(6);
                 event.Reminder2 = cursor.getInt(7);
                 event.Reminder3 = cursor.getInt(8);

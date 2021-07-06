@@ -82,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
         EventModel model = new EventModel();
         Calendar calendar = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
+        calendar.set(year, month, date);
 
         //Set times to show in form
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
         model.StartTime = calendar.getTime();
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         model.EndTime = calendar.getTime();
