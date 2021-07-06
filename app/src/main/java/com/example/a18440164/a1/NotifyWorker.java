@@ -38,7 +38,7 @@ public class NotifyWorker extends Worker {
                 .setContentTitle(title + " @" + new SimpleDateFormat("HH:mm aa").format(new Date(time)))
                 .setContentText(detail)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(new SimpleDateFormat("HH:mm aa").format(new Date(time))).setSummaryText(detail))
+                .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(new SimpleDateFormat("HH:mm aa").format(new Date(time))).setSummaryText(title))
                 .setDefaults(Notification.DEFAULT_ALL);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
