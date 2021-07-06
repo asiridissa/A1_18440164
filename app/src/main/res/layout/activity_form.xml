@@ -172,14 +172,14 @@
                         android:orientation="vertical">
 
                         <Switch
-                            android:id="@+id/switch3"
+                            android:id="@+id/switch1"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:height="30dp"
                             android:foregroundGravity="center_vertical"
                             android:gravity="center_horizontal"
-                            android:text="Reminder 3"
+                            android:text="Reminder 1"
                             android:textSize="14sp"
                             android:layout_height="wrap_content" />
 
@@ -230,7 +230,7 @@
                         android:orientation="vertical">
 
                         <Switch
-                            android:id="@+id/switch1"
+                            android:id="@+id/switch3"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
@@ -238,7 +238,7 @@
                             android:height="30dp"
                             android:foregroundGravity="center_vertical"
                             android:gravity="center_horizontal"
-                            android:text="Reminder 1"
+                            android:text="Reminder 3"
                             android:textSize="14sp"
                             android:layout_height="wrap_content" />
 

@@ -9,6 +9,8 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 //Workder for reminder notification
@@ -33,10 +35,10 @@ public class NotifyWorker extends Worker {
         //build and show notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_access_alarms_24)
-                .setContentTitle(title + " @" + new Date(time).toLocaleString())
+                .setContentTitle(title + " @" + new SimpleDateFormat("HH:mm aa").format(new Date(time)))
                 .setContentText(detail)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(new Date(time).toLocaleString()).setSummaryText(detail))
+                .setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(new SimpleDateFormat("HH:mm aa").format(new Date(time))).setSummaryText(detail))
                 .setDefaults(Notification.DEFAULT_ALL);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
