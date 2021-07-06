@@ -2,24 +2,32 @@ package com.example.a18440164.a1;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.widget.CalendarView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     //Notification channel id
     private final String CHANNEL_ID = String.valueOf(R.string.channnel_id);
+    ArrayList<EventModel> events = new ArrayList<EventModel>();
+    DayEventsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +45,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Initialize adapter and bind to list view
+        adapter = new DayEventsAdapter(this,events);
+        ListView listView = findViewById(R.id.eventList);
+        listView.setAdapter(adapter);
+
+        UpdateEventList();
+
         //Channel initiation
         createNotificationChannel();
+/*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String packageName = this.getPackageName();
+            PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                Intent intent = new Intent();
+                intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setData(Uri.parse("package:" + packageName));
+                this.startActivity(intent);
+            }
+        }*/
     }
 
     @Override
@@ -46,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //Update future event count
         updateCount(new Date());
+        UpdateEventList();
     }
 
     //open form activity with selected date
@@ -100,5 +128,10 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    void UpdateEventList(){
+        adapter.clear();
+        adapter.addAll((List<EventModel>) new DBHandler(this).getFutureEvents(new Date()));
     }
 }

@@ -130,6 +130,36 @@ public class DBHandler extends SQLiteOpenHelper {
         return eventList;
     }
 
+    public List<EventModel> getFutureEvents(Date date) {
+        List<EventModel> eventList = new ArrayList<EventModel>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " > " + new Date().getTime() + " AND " + KEY_Title + " IS NOT NULL";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                //String event = cursor.getString(1) + " " + new Date(cursor.getInt(4)).toString();
+                EventModel event = new EventModel();
+                event.Id = Integer.parseInt(cursor.getString(0));
+                event.Title = cursor.getString(1);
+                event.Description = cursor.getString(2);
+                event.Location = cursor.getString(3);
+                event.StartTime = new Date(cursor.getInt(4));
+                event.EndTime = new Date(cursor.getInt(5));
+                event.Reminder1 = cursor.getInt(6);
+                event.Reminder2 = cursor.getInt(7);
+                event.Reminder3 = cursor.getInt(8);
+                eventList.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        // return event list
+        return eventList;
+    }
+
     // Getting future Events Count
     public int getEventsCount(Date date) {
         String countQuery = "SELECT  * FROM " + TABLE_Event + " WHERE " + KEY_StartTime + " >= " + date.getTime();
